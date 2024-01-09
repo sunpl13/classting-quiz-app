@@ -1,6 +1,14 @@
-import { Global, css } from "@emotion/react";
+import { Global, css } from '@emotion/react';
 
 const reset = css`
+  :root {
+    --primary: #150080;
+    --accent: #d08642;
+    --bg: #ffffff;
+    --bg-accent: #e7e8e9;
+    --disabled: #9c9c9c;
+    --foreground: #2d264b;
+  }
   html,
   body,
   #root {
@@ -42,13 +50,18 @@ const reset = css`
     border: none;
   }
 
-  main {
+  body {
+    font-family: monospace;
+    background: linear-gradient(0deg, var(--primary) 0.03%, var(--accent));
+    color: var(--foreground);
     display: flex;
     justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    width: 100vw;
+    margin: 0 auto;
+    padding: 0 30px;
     height: 100vh;
+  }
+
+  main {
   }
 `;
 
