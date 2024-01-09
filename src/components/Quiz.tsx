@@ -3,12 +3,15 @@ import { TriviaQuizResponse } from '../types/quiztype';
 import styled from '@emotion/styled';
 import shuffle from '../utils/shuffle';
 import { Button } from '@mui/material';
+import useModals from '../hooks/useModals';
+import { modals } from './modals/Modals';
 
 type Props = {
   questions: TriviaQuizResponse[];
 };
 
 const Quiz = ({ questions }: Props) => {
+  const { openModal } = useModals();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answerIdx, setAnswerIdx] = useState(null);
   const [answer, setAnswer] = useState(false);
@@ -32,7 +35,7 @@ const Quiz = ({ questions }: Props) => {
     }
   };
 
-  const onClickNext = () => {
+  const setNextQuestion = () => {
     setAnswerIdx(null);
     setResult((prev) =>
       answer
@@ -49,6 +52,20 @@ const Quiz = ({ questions }: Props) => {
       setCurrentQuestion((prev) => prev + 1);
     } else {
       setCurrentQuestion(0);
+    }
+  };
+
+  const onClickNext = () => {
+    if (answer) {
+      openModal(modals.correct, {
+        onSubmit: () => setNextQuestion()
+      });
+    } else {
+      openModal(modals.incorrect, {
+        onSubmit: () => setNextQuestion(),
+        myAnswer: choices[answerIdx],
+        correctAnswer: correct_answer
+      });
     }
   };
 
