@@ -1,6 +1,6 @@
-type Difficulty = "any" | "easy" | "medium" | "hard";
-type QuizTypeSelect = "any" | "multiple" | "boolean";
-type Category = number | "any";
+type Difficulty = 'any' | 'easy' | 'medium' | 'hard';
+type QuizTypeSelect = 'any' | 'multiple' | 'boolean';
+type Category = string;
 
 export type QuizParams = {
   amount: number;
