@@ -1,10 +1,12 @@
-import { QuizParams, TriviaQuizResponse } from "./../types/quiztype";
-import axios from "axios";
-import { requestHandler } from "./requestHandler";
+import { QuizParams, TriviaQuizResponse } from './../types/quiztype';
+import axios from 'axios';
+import { requestHandler } from './requestHandler';
 
-interface QuizResponse {
+export interface QuizResponse {
   response_code: number;
-  results: TriviaQuizResponse;
+  results: TriviaQuizResponse[];
 }
 
-export const getQuiz = requestHandler<QuizParams, QuizResponse>((params) => axios.get("https://opentdb.com/api.php", { params }));
+export const getQuiz = requestHandler<QuizParams, QuizResponse>((params) =>
+  axios.get('https://opentdb.com/api.php', { params })
+);

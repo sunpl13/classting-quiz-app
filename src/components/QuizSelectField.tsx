@@ -1,16 +1,16 @@
 import React from 'react';
-import { MenuItem, Select } from '@mui/material';
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { optionValues } from '../utils/test/datas';
 type Props = {
   label: string;
   className?: string;
   onChange: (
-    e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent<string>
   ) => void;
   type: 'category' | 'type' | 'difficulty';
   name: string;
   id?: string;
-  value: string | number;
+  value: string;
 };
 
 const QuizSelectField = ({
