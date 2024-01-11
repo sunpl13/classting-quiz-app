@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import {
   ModalsDispatchContext,
   ModalsStateContext
 } from '../../contexts/ModalContext';
 import CorrectModal from './CorrectModal';
 import IncorrectModal from './IncorrectModal';
+import { jsx } from '@emotion/react';
 
 export const modals = {
-  correct: CorrectModal,
-  incorrect: IncorrectModal
+  correct: CorrectModal as () => jsx.JSX.Element,
+  incorrect: IncorrectModal as () => jsx.JSX.Element
 };
 
 const Modals = () => {
@@ -21,8 +22,6 @@ const Modals = () => {
     const { onSubmit, ...restProps } = props;
 
     const onClose = () => {
-      console.log('여기도 실행되어야지');
-
       close(Component);
     };
 
@@ -30,8 +29,6 @@ const Modals = () => {
       if (typeof onSubmit === 'function') {
         await onSubmit();
       }
-      console.log('여기 실행');
-
       onClose();
     };
     return (

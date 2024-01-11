@@ -1,10 +1,12 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { TriviaQuizResponse } from '../types/quiztype';
 import styled from '@emotion/styled';
 import shuffle from '../utils/shuffle';
 import { Button } from '@mui/material';
 import useModals from '../hooks/useModals';
 import { modals } from './modals/Modals';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   questions: TriviaQuizResponse[];
@@ -13,7 +15,9 @@ type Props = {
 const Quiz = ({ questions }: Props) => {
   const { openModal } = useModals();
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answerIdx, setAnswerIdx] = useState(null);
+  const { setItem } = useLocalStorage('endTime');
+  const navigate = useNavigate();
+  const [answerIdx, setAnswerIdx] = useState<number | null>(null);
   const [answer, setAnswer] = useState(false);
   const [result, setResult] = useState({
     correctAnswer: 0,
@@ -26,7 +30,7 @@ const Quiz = ({ questions }: Props) => {
     [correct_answer, incorrect_answers]
   );
 
-  const onAnswerClick = (answer: string, index: numer) => {
+  const onAnswerClick = (answer: string, index: number) => {
     setAnswerIdx(index);
     if (answer === correct_answer) {
       setAnswer(true);
@@ -37,6 +41,7 @@ const Quiz = ({ questions }: Props) => {
 
   const setNextQuestion = () => {
     setAnswerIdx(null);
+
     setResult((prev) =>
       answer
         ? {
@@ -52,18 +57,27 @@ const Quiz = ({ questions }: Props) => {
       setCurrentQuestion((prev) => prev + 1);
     } else {
       setCurrentQuestion(0);
+      setItem(new Date());
+      const state = {
+        totalQuestionCount: questions.length,
+        correctAnswer: answer ? result.correctAnswer + 1 : result.correctAnswer,
+        incorrectAnswer: !answer
+          ? result.incorrectAnswer + 1
+          : result.incorrectAnswer
+      };
+      navigate('/result', { state });
     }
   };
 
   const onClickNext = () => {
     if (answer) {
       openModal(modals.correct, {
-        onSubmit: () => setNextQuestion()
+        onSubmit: setNextQuestion
       });
     } else {
       openModal(modals.incorrect, {
-        onSubmit: () => setNextQuestion(),
-        myAnswer: choices[answerIdx],
+        onSubmit: setNextQuestion,
+        myAnswer: choices[answerIdx as number],
         correctAnswer: correct_answer
       });
     }
@@ -79,9 +93,8 @@ const Quiz = ({ questions }: Props) => {
           <li
             onClick={() => onAnswerClick(answer, idx)}
             key={answer}
-            className={answerIdx === idx ? 'selected' : undefined}>
-            {answer}
-          </li>
+            className={answerIdx === idx ? 'selected' : undefined}
+            dangerouslySetInnerHTML={{ __html: answer }}></li>
         ))}
       </ul>
       <ButtonWrapp>

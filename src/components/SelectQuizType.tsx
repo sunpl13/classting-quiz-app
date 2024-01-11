@@ -1,13 +1,15 @@
 import styled from '@emotion/styled';
-import { Button, TextField } from '@mui/material';
+import { Button, SelectChangeEvent, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { QuizParams } from '../types/quiztype';
 
 import QuizSelectField from './QuizSelectField';
 import { useNavigate } from 'react-router-dom';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const SelectQuizType = () => {
   const navigate = useNavigate();
+  const { setItem } = useLocalStorage('startTime');
   const [quizTypes, setquizTypes] = useState<QuizParams>({
     amount: 10,
     difficulty: 'any',
@@ -16,7 +18,9 @@ const SelectQuizType = () => {
   });
 
   const handleChage = (
-    e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
+    e:
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | SelectChangeEvent<string>
   ) => {
     setquizTypes({
       ...quizTypes,
@@ -26,6 +30,7 @@ const SelectQuizType = () => {
 
   const onClick = () => {
     const { difficulty, category, type } = quizTypes;
+    setItem(new Date());
     navigate('/question', {
       state: {
         ...quizTypes,
@@ -86,21 +91,26 @@ const SelectQuizType = () => {
 export default SelectQuizType;
 
 const Wrapper = styled.div`
-  border: 1px solid #e2e2e2;
-  border-radius 8px;
-  padding: 1rem;
-  background:var(--bg);
+  width: 500px;
+  background: var(--bg);
+  border-radius: 4px;
+  margin-top: 100px;
+  padding: 30px 60px;
   & .data-input {
-    width:100%;
+    width: 100%;
   }
 
-  & .field{
-    margin: 0.5em
+  & .field {
+    margin: 0.5em;
   }
 
   & button {
     width: 100%;
     height: 40px;
-    margin-top:0.5em;
+    margin-top: 0.5em;
+  }
+
+  & h2 {
+    text-align: center;
   }
 `;
