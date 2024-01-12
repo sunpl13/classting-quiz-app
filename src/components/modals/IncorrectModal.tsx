@@ -16,10 +16,14 @@ const IncorrectModal = ({
       <div>
         <p>틀렸습니다.. 조금 더 노력 해보세요!😢</p>
         <div className="answer-conatainer">
-          내가 선택한 정답: <span>{myAnswer}</span>
+          내가 선택한 정답:{' '}
+          <span dangerouslySetInnerHTML={{ __html: myAnswer }}></span>
         </div>
         <div className="answer-conatainer">
-          정답: <span className="correct">{correctAnswer}</span>
+          정답:{' '}
+          <span
+            className="correct"
+            dangerouslySetInnerHTML={{ __html: correctAnswer }}></span>
         </div>
       </div>
       <button onClick={onSubmit}>닫기</button>

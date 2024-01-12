@@ -7,6 +7,7 @@ import useModals from '../hooks/useModals';
 import { modals } from './modals/Modals';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useNavigate } from 'react-router-dom';
+import { useMyAnswerContext } from '../contexts/MyAnswerContext';
 
 type Props = {
   questions: TriviaQuizResponse[];
@@ -15,14 +16,15 @@ type Props = {
 const Quiz = ({ questions }: Props) => {
   const { openModal } = useModals();
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const {
+    myAnswer,
+    actions: { setMyAnswer }
+  } = useMyAnswerContext();
   const { setItem } = useLocalStorage('endTime');
   const navigate = useNavigate();
   const [answerIdx, setAnswerIdx] = useState<number | null>(null);
   const [answer, setAnswer] = useState(false);
-  const [result, setResult] = useState({
-    correctAnswer: 0,
-    incorrectAnswer: 0
-  });
+
   const { question, correct_answer, incorrect_answers } =
     questions[currentQuestion];
   const choices = useMemo(
@@ -41,31 +43,33 @@ const Quiz = ({ questions }: Props) => {
 
   const setNextQuestion = () => {
     setAnswerIdx(null);
-
-    setResult((prev) =>
-      answer
-        ? {
-            ...prev,
-            correctAnswer: prev.correctAnswer + 1
+    if (answer) {
+      setMyAnswer({
+        ...myAnswer,
+        correct: [
+          ...myAnswer.correct,
+          { questionNumber: currentQuestion + 1, answer: correct_answer }
+        ]
+      });
+    } else {
+      setMyAnswer({
+        ...myAnswer,
+        inCorrect: [
+          ...myAnswer.inCorrect,
+          {
+            questionNumber: currentQuestion + 1,
+            myAnswer: choices[answerIdx as number],
+            answer: correct_answer
           }
-        : {
-            ...prev,
-            incorrectAnswer: prev.incorrectAnswer + 1
-          }
-    );
+        ]
+      });
+    }
     if (currentQuestion !== questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
     } else {
       setCurrentQuestion(0);
       setItem(new Date());
-      const state = {
-        totalQuestionCount: questions.length,
-        correctAnswer: answer ? result.correctAnswer + 1 : result.correctAnswer,
-        incorrectAnswer: !answer
-          ? result.incorrectAnswer + 1
-          : result.incorrectAnswer
-      };
-      navigate('/result', { state });
+      navigate('/result');
     }
   };
 

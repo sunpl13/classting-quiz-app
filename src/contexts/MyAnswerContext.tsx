@@ -5,12 +5,12 @@ interface IProps {
 
 interface ICorrect {
   questionNumber: number;
-  awnser: string;
+  answer: string;
 }
 
 interface IIncorrect {
   questionNumber: number;
-  awnser: string;
+  answer: string;
   myAnswer: string;
 }
 

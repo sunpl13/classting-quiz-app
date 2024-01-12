@@ -1,17 +1,18 @@
 import styled from '@emotion/styled';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Button } from '@mui/material';
 import DoughnutChart from './DoughnutChart';
+import { useMyAnswerContext } from '../contexts/MyAnswerContext';
 
 const Result = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const resultInfo = {
-    ...location.state
-  };
 
+  const {
+    myAnswer: { correct, inCorrect }
+  } = useMyAnswerContext();
+  const totalAnswerCount = correct.length + inCorrect.length;
   const { getItem: startTime, removeItem: removeStartTime } =
     useLocalStorage('startTime');
   const { getItem: endTime, removeItem: removeEndTime } =
@@ -24,10 +25,7 @@ const Result = () => {
     datasets: [
       {
         label: '갯수',
-        data: [
-          resultInfo.correctAnswer,
-          resultInfo.incorrectAnswer
-        ] as number[],
+        data: [correct.length, inCorrect.length] as number[],
         borderWidth: 0,
         backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)']
       }
@@ -54,13 +52,13 @@ const Result = () => {
             </span>
           </p>
           <p>
-            전체 문항 수 : <span>{resultInfo.totalQuestionCount}</span>
+            전체 문항 수 : <span>{totalAnswerCount}</span>
           </p>
           <p>
-            맞은 문항 수 : <span>{resultInfo.correctAnswer}</span>
+            맞은 문항 수 : <span>{correct.length}</span>
           </p>
           <p>
-            틀린 문항 수 : <span>{resultInfo.incorrectAnswer}</span>
+            틀린 문항 수 : <span>{inCorrect.length}</span>
           </p>
         </div>
         <div className="chart-container">
