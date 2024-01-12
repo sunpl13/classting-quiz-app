@@ -3,50 +3,34 @@ interface IProps {
   children: ReactNode;
 }
 
-interface ICorrect {
-  questionNumber: number;
-  answer: string;
-}
-
-interface IIncorrect {
+interface IAnswer {
   questionNumber: number;
   answer: string;
   myAnswer: string;
 }
 
-type MyAnswer = {
-  correct: ICorrect[];
-  inCorrect: IIncorrect[];
-};
-
 type MyAnswerContextValue = {
-  myAnswer: MyAnswer;
+  myAnswer: IAnswer[];
   actions: {
-    setMyAnswer: (myAnswer: MyAnswer) => void;
+    setMyAnswer: (myAnswer: IAnswer[]) => void;
   };
 };
 
 const MyAnswerContext = createContext<MyAnswerContextValue>({
-  myAnswer: {
-    correct: [],
-    inCorrect: []
-  },
+  myAnswer: [],
   actions: {
     setMyAnswer: () => {}
   }
 });
 
 export const MyAnswerContextProvider = ({ children }: IProps) => {
-  const [myAnswer, setMyAnswer] = useState<MyAnswer>({
-    correct: [],
-    inCorrect: []
-  });
+  const [myAnswer, setMyAnswer] = useState<IAnswer[]>([]);
 
   const actions = useMemo(
     () => ({
       myAnswer,
-      setMyAnswer: (myAnswer: MyAnswer) => {
-        return setMyAnswer({ ...myAnswer });
+      setMyAnswer: (myAnswer: IAnswer[]) => {
+        return setMyAnswer([...myAnswer]);
       }
     }),
     [myAnswer]

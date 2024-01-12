@@ -43,27 +43,16 @@ const Quiz = ({ questions }: Props) => {
 
   const setNextQuestion = () => {
     setAnswerIdx(null);
-    if (answer) {
-      setMyAnswer({
-        ...myAnswer,
-        correct: [
-          ...myAnswer.correct,
-          { questionNumber: currentQuestion + 1, answer: correct_answer }
-        ]
-      });
-    } else {
-      setMyAnswer({
-        ...myAnswer,
-        inCorrect: [
-          ...myAnswer.inCorrect,
-          {
-            questionNumber: currentQuestion + 1,
-            myAnswer: choices[answerIdx as number],
-            answer: correct_answer
-          }
-        ]
-      });
-    }
+
+    setMyAnswer([
+      ...myAnswer,
+      {
+        questionNumber: currentQuestion + 1,
+        answer: correct_answer,
+        myAnswer: choices[answerIdx as number]
+      }
+    ]);
+
     if (currentQuestion !== questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
     } else {
