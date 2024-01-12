@@ -3,16 +3,18 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Button } from '@mui/material';
-import DoughnutChart from './DoughnutChart';
+import DoughnutChart from '../components/DoughnutChart';
 import { useMyAnswerContext } from '../contexts/MyAnswerContext';
 
 const Result = () => {
   const navigate = useNavigate();
 
-  const {
-    myAnswer: { correct, inCorrect }
-  } = useMyAnswerContext();
-  const totalAnswerCount = correct.length + inCorrect.length;
+  const { myAnswer } = useMyAnswerContext();
+  const totalAnswerCount = myAnswer.length;
+  const correctCount = myAnswer.filter(
+    (item) => item.myAnswer === item.answer
+  ).length;
+  const incorrectCount = totalAnswerCount - correctCount;
   const { getItem: startTime, removeItem: removeStartTime } =
     useLocalStorage('startTime');
   const { getItem: endTime, removeItem: removeEndTime } =
@@ -25,7 +27,7 @@ const Result = () => {
     datasets: [
       {
         label: '갯수',
-        data: [correct.length, inCorrect.length] as number[],
+        data: [correctCount, incorrectCount] as number[],
         borderWidth: 0,
         backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)']
       }
@@ -38,6 +40,10 @@ const Result = () => {
 
   const onReset = () => {
     navigate('/', { replace: true });
+  };
+
+  const viewHistory = () => {
+    navigate('/history');
   };
 
   return (
@@ -55,10 +61,10 @@ const Result = () => {
             전체 문항 수 : <span>{totalAnswerCount}</span>
           </p>
           <p>
-            맞은 문항 수 : <span>{correct.length}</span>
+            맞은 문항 수 : <span>{correctCount}</span>
           </p>
           <p>
-            틀린 문항 수 : <span>{inCorrect.length}</span>
+            틀린 문항 수 : <span>{incorrectCount}</span>
           </p>
         </div>
         <div className="chart-container">
@@ -69,7 +75,9 @@ const Result = () => {
         <Button variant="contained" onClick={onReset}>
           다시하기
         </Button>
-        <Button variant="contained">문제 기록 보기</Button>
+        <Button variant="contained" onClick={viewHistory}>
+          문제 기록 보기
+        </Button>
       </div>
     </ResultContainer>
   );
