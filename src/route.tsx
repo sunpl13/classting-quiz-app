@@ -1,7 +1,8 @@
 import App from './App';
-import QuizWrapper from './components/QuizWrapper';
-import Result from './components/Result';
-import SelectQuizType from './components/SelectQuizType';
+import QuestionHistory from './pages/QuestionHistory';
+import QuizWrapper from './pages/QuizWrapper';
+import Result from './pages/Result';
+import SelectQuizType from './pages/SelectQuizType';
 import { createBrowserRouter } from 'react-router-dom';
 
 export const router = createBrowserRouter([
@@ -11,7 +12,8 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <SelectQuizType /> },
       { path: 'question', element: <QuizWrapper /> },
-      { path: '/result', element: <Result /> }
+      { path: '/result', element: <Result /> },
+      { path: 'history', element: <QuestionHistory /> }
     ]
   }
 ]);
