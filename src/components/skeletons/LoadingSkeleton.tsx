@@ -3,7 +3,7 @@ import Skeleton from './Skeleton';
 
 const LoadingSkeleton = () => {
   return (
-    <Wrapper>
+    <Wrapper data-testid="loading">
       <Skeleton width={40} height={30} $mb={10} />
       <Skeleton width={380} height={45} $mb={20} />
 
