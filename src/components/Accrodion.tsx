@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import useDebounce from '../hooks/useDebounce';
 import styled from '@emotion/styled';
 import AccordionContent from './AccordionContent';
 interface IContent {
@@ -24,20 +23,20 @@ const Accrodion = ({ content, id, title }: Props) => {
       setActive('');
     }
   };
-  const onToggle = useDebounce(toggleHandler, 200);
-
   return (
     <Container>
       <div className="accordion">
         <div className="accordionHeading">
           <div className="container">
             <span>{title}</span>
-            <span id="toggle" onClick={onToggle}>
+            <span id="toggle" onClick={toggleHandler}>
               {active === id ? '△' : '▽'}
             </span>
           </div>
         </div>
-        <div className={(active === id ? 'show' : '') + ' accordionContent'}>
+        <div
+          data-testid="content-container"
+          className={(active === id ? 'show' : '') + ' accordionContent'}>
           <AccordionContent
             question={question}
             myAnswer={myAnswer}
