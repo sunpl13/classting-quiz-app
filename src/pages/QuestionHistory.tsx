@@ -1,19 +1,16 @@
-import { useQuestionContext } from '../contexts/QuestionContext';
-import { useMyAnswerContext } from '../contexts/MyAnswerContext';
 import Accrodion from '../components/Accrodion';
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useQuestionContext } from '../contexts/QuestionContext';
+import { useMyAnswerContext } from '../contexts/MyAnswerContext';
+import useCleanUp from '../hooks/useCleanUp';
 
 const QuestionHistory = () => {
-  const {
-    questionList,
-    actions: { setQuestionList }
-  } = useQuestionContext();
-  const {
-    myAnswer,
-    actions: { setMyAnswer }
-  } = useMyAnswerContext();
+  const { questionList } = useQuestionContext();
+  const { myAnswer } = useMyAnswerContext();
+
+  const { onReset } = useCleanUp();
   const navigate = useNavigate();
   const getMyAnswer = (questionNumber: number) => {
     return myAnswer.find((item) => item.questionNumber === questionNumber);
@@ -21,8 +18,9 @@ const QuestionHistory = () => {
 
   const onClick = () => {
     navigate('/', { replace: true });
-    setMyAnswer([]);
-    setQuestionList([]);
+
+    //clean up
+    onReset();
   };
 
   return (

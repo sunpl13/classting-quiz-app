@@ -1,11 +1,13 @@
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import useCleanUp from '../hooks/useCleanUp';
 
 const Error = () => {
   const navigate = useNavigate();
-
+  const { onReset } = useCleanUp();
   const onClick = () => {
+    onReset();
     navigate('/', { replace: true });
   };
   return (

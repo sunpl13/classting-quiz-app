@@ -4,10 +4,11 @@ import { Button } from '@mui/material';
 import DoughnutChart from '../components/DoughnutChart';
 import { useMyAnswerContext } from '../contexts/MyAnswerContext';
 import { useQuizTimesContext } from '../contexts/QuizTimesContext';
+import useCleanUp from '../hooks/useCleanUp';
 
 const Result = () => {
   const navigate = useNavigate();
-
+  const { onReset: onContextReset } = useCleanUp();
   const { myAnswer } = useMyAnswerContext();
   const {
     times: { startTime, endTime }
@@ -32,12 +33,9 @@ const Result = () => {
       }
     ]
   };
-  useEffect(() => {
-    removeStartTime();
-    removeEndTime();
-  }, []);
 
   const onReset = () => {
+    onContextReset();
     navigate('/', { replace: true });
   };
 
