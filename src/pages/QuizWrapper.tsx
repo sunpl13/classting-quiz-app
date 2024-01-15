@@ -6,11 +6,8 @@ import Error from '../components/Error';
 
 const QuizWrapper = () => {
   const location = useLocation();
-  console.log(location.pathname);
-
   const quizInfo = { ...location.state };
   const { isLoading, data } = useGetQuiz(quizInfo);
-  console.log(data, isLoading);
 
   if (isLoading || data === null) {
     return <LoadingSkeleton />;
