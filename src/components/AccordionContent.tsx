@@ -21,14 +21,18 @@ const AccordionContent = ({ question, myAnswer, correctAnswer }: Props) => {
       </div>
       <div className="answer-conatainer">
         정답 여부:{' '}
-        <span className={isCorrect ? 'correct' : 'incorrect'}>
+        <span
+          data-testid="isCorrect"
+          className={isCorrect ? 'correct' : 'incorrect'}>
           {isCorrect ? 'O' : 'X'}
         </span>
       </div>
 
       {!isCorrect && (
         <>
-          <div className="answer-conatainer">
+          <div
+            data-testid="correctAnswer-container"
+            className="answer-conatainer">
             정답:{' '}
             <span
               className="incorrect"
