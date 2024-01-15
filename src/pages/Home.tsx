@@ -7,7 +7,7 @@ import QuizSelectField from '../components/QuizSelectField';
 import { useNavigate } from 'react-router-dom';
 import { useQuizTimesContext } from '../contexts/QuizTimesContext';
 
-const SelectQuizType = () => {
+const Home = () => {
   const navigate = useNavigate();
 
   const {
@@ -91,7 +91,7 @@ const SelectQuizType = () => {
   );
 };
 
-export default SelectQuizType;
+export default Home;
 
 const Wrapper = styled.div`
   width: 500px;

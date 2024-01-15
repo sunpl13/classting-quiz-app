@@ -4,7 +4,7 @@ import Quiz from '../components/Quiz';
 import LoadingSkeleton from '../components/skeletons/LoadingSkeleton';
 import Error from '../components/Error';
 
-const QuizWrapper = () => {
+const Question = () => {
   const location = useLocation();
   const quizInfo = { ...location.state };
   const { isLoading, data } = useGetQuiz(quizInfo);
@@ -19,4 +19,4 @@ const QuizWrapper = () => {
   return <Quiz questions={data.data.results} />;
 };
 
-export default QuizWrapper;
+export default Question;

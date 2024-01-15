@@ -6,7 +6,7 @@ import { useQuestionContext } from '../contexts/QuestionContext';
 import { useMyAnswerContext } from '../contexts/MyAnswerContext';
 import useCleanUp from '../hooks/useCleanUp';
 
-const QuestionHistory = () => {
+const History = () => {
   const { questionList } = useQuestionContext();
   const { myAnswer } = useMyAnswerContext();
 
@@ -52,7 +52,7 @@ const QuestionHistory = () => {
   );
 };
 
-export default QuestionHistory;
+export default History;
 
 const Container = styled.div`
   width: 800px;
