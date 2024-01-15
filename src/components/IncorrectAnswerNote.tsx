@@ -27,7 +27,7 @@ const IncorrectAnswerNote = () => {
       )}
 
       <Button className="write-btn" onClick={onClick}>
-        기록
+        {isTextAreaActive ? '수정' : '기록'}
       </Button>
     </Containter>
   );
