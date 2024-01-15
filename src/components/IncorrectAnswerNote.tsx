@@ -17,7 +17,7 @@ const IncorrectAnswerNote = () => {
     <Containter>
       <h2>오답 노트</h2>
       {!isTextAreaActive ? (
-        <p>{incorrectAnswerText}</p>
+        <p data-testid="p-tag">{incorrectAnswerText}</p>
       ) : (
         <textarea
           placeholder="오답노트를 작성해주세요."
