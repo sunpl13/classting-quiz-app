@@ -1,12 +1,24 @@
 import { jsx } from '@emotion/react';
 import { ReactNode, createContext, useMemo, useState } from 'react';
+import { modalComponentPropType } from '../types/modalComponentPropType';
 interface IProps {
   children: ReactNode;
 }
 
 interface IModalDispatch {
-  open: (Component: () => jsx.JSX.Element, props: IModalPropTypes) => void;
-  close: (Component: () => jsx.JSX.Element) => void;
+  open: (
+    Component: ({
+      onClose,
+      onSubmit
+    }: modalComponentPropType) => jsx.JSX.Element,
+    props: IModalPropTypes
+  ) => void;
+  close: (
+    Component: ({
+      onClose,
+      onSubmit
+    }: modalComponentPropType) => jsx.JSX.Element
+  ) => void;
 }
 
 export interface IModalPropTypes {
@@ -15,7 +27,7 @@ export interface IModalPropTypes {
 }
 
 interface IModals {
-  Component: () => jsx.JSX.Element;
+  Component: ({ onClose, onSubmit }: modalComponentPropType) => jsx.JSX.Element;
   props: IModalPropTypes;
 }
 
@@ -28,13 +40,24 @@ export const ModalsStateContext = createContext<IModals[]>([]);
 const ModalProvider = ({ children }: IProps) => {
   const [openModals, setOpenModals] = useState<IModals[]>([]);
 
-  const open = (Component: () => jsx.JSX.Element, props: IModalPropTypes) => {
+  const open = (
+    Component: ({
+      onClose,
+      onSubmit
+    }: modalComponentPropType) => jsx.JSX.Element,
+    props: IModalPropTypes
+  ) => {
     setOpenModals((modals) => {
       return [...modals, { Component, props }];
     });
   };
 
-  const close = (Component: () => jsx.JSX.Element) => {
+  const close = (
+    Component: ({
+      onClose,
+      onSubmit
+    }: modalComponentPropType) => jsx.JSX.Element
+  ) => {
     setOpenModals((modals) => {
       return modals.filter((modal) => {
         return modal.Component !== Component;

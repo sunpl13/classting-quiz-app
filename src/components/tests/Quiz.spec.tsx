@@ -1,18 +1,24 @@
 import { screen } from '@testing-library/react';
-import React from 'react';
 import render from '../../utils/test/render';
 import Quiz from '../Quiz';
+import { TriviaQuizResponse } from '../../types/quiztype';
 
-const mockQuestions = [
+const mockQuestions: TriviaQuizResponse[] = [
   {
     question: 'What is the capital of France?',
     correct_answer: 'Paris',
-    incorrect_answers: ['Berlin', 'Madrid', 'Rome']
+    incorrect_answers: ['Berlin', 'Madrid', 'Rome'],
+    type: 'multiple',
+    difficulty: 'medium',
+    category: 'Entertainment: Video Games'
   },
   {
     question: 'What is the capital of Korea?',
     correct_answer: 'Seoul',
-    incorrect_answers: ['Tokyo', 'Beizing', 'Madirid']
+    incorrect_answers: ['Tokyo', 'Beizing', 'Madirid'],
+    type: 'multiple',
+    difficulty: 'medium',
+    category: 'Entertainment: Video Games'
   }
 ];
 
@@ -48,11 +54,14 @@ describe('Quiz 컴포넌트', () => {
   });
 
   it('마지막 질문일 경우 버튼은 "결과보기"라는 이름이어야 한다.', async () => {
-    const mockQuestionsOnlyOneQuestion = [
+    const mockQuestionsOnlyOneQuestion: TriviaQuizResponse[] = [
       {
         question: 'What is the capital of France?',
         correct_answer: 'Paris',
-        incorrect_answers: ['Berlin', 'Madrid', 'Rome']
+        incorrect_answers: ['Berlin', 'Madrid', 'Rome'],
+        type: 'multiple',
+        difficulty: 'medium',
+        category: 'Entertainment: Video Games'
       }
     ];
     await render(<Quiz questions={mockQuestionsOnlyOneQuestion} />);

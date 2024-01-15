@@ -1,5 +1,4 @@
 import { screen } from '@testing-library/react';
-import React from 'react';
 import render from '../../utils/test/render';
 import IncorrectModal from '../modals/IncorrectModal';
 
@@ -41,7 +40,13 @@ describe('IncorrectModal 컴포넌트', () => {
 
   it('IncorrectModal 버튼에 Pros로 주어진 함수가 잘 호출 되어야 한다.', async () => {
     const SubminFn = vi.fn();
-    const { user } = await render(<IncorrectModal onSubmit={SubminFn} />);
+    const { user } = await render(
+      <IncorrectModal
+        myAnswer="correcT"
+        correctAnswer="correct"
+        onSubmit={SubminFn}
+      />
+    );
 
     const button = screen.getByRole('button', { name: '닫기' });
     await user.click(button);

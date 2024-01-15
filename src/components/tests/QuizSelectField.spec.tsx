@@ -1,11 +1,20 @@
 import { screen } from '@testing-library/react';
-import React from 'react';
 import QuizSelectField from '../QuizSelectField';
 import render from '../../utils/test/render';
 
 describe('QuizSelectField 컴포넌트', () => {
+  const spy = vi.fn();
   it('label prop으로 설정한 라벨 제목이 보여야 한다.', async () => {
-    await render(<QuizSelectField label="test" type="category" id="test" />);
+    await render(
+      <QuizSelectField
+        label="test"
+        value="any"
+        type="category"
+        id="test"
+        name="test"
+        onChange={spy}
+      />
+    );
     const label = screen.getByText('test');
     expect(label).toBeInTheDocument();
   });
@@ -17,6 +26,9 @@ describe('QuizSelectField 컴포넌트', () => {
         type="category"
         id="test"
         className="my-class"
+        name="test"
+        value="any"
+        onChange={spy}
       />
     );
     const label = screen.getByTestId('test-input');
@@ -32,6 +44,8 @@ describe('QuizSelectField 컴포넌트', () => {
           type="category"
           id="test"
           className="my-class"
+          name="test"
+          onChange={spy}
         />
       );
       const value = screen.getByText('Any Category');
@@ -46,6 +60,8 @@ describe('QuizSelectField 컴포넌트', () => {
           type="difficulty"
           id="test"
           className="my-class"
+          name="test"
+          onChange={spy}
         />
       );
       const value = screen.getByText('Any Difficulty');
@@ -60,6 +76,8 @@ describe('QuizSelectField 컴포넌트', () => {
           type="type"
           id="test"
           className="my-class"
+          name="test"
+          onChange={spy}
         />
       );
       const value = screen.getByText('Any Type');

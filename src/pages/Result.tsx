@@ -10,16 +10,15 @@ const Result = () => {
   const navigate = useNavigate();
   const { onReset: onContextReset } = useCleanUp();
   const { myAnswer } = useMyAnswerContext();
-  const {
-    times: { startTime, endTime }
-  } = useQuizTimesContext();
+  const { times } = useQuizTimesContext();
   const totalAnswerCount = myAnswer.length;
   const correctCount = myAnswer.filter(
     (item) => item.myAnswer === item.answer
   ).length;
   const incorrectCount = totalAnswerCount - correctCount;
-
-  const time = (endTime - startTime) / 1000;
+  const startTime = times.startTime as Date;
+  const endTime = times.endTime as Date;
+  const time = (+endTime - +startTime) / 1000;
   const minute = Math.floor(time / 60);
   const second = (time % 60).toFixed(0);
   const chartData = {

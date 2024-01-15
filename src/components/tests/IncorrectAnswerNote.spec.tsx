@@ -1,5 +1,4 @@
 import { screen } from '@testing-library/react';
-import React from 'react';
 import render from '../../utils/test/render';
 import IncorrectAnswerNote from '../IncorrectAnswerNote';
 
@@ -68,7 +67,7 @@ describe('IncorrectAnswerNote 컴포넌트', () => {
     const button = screen.getByRole('button', { name: '기록' });
     await user.click(button);
 
-    const textArea = screen.queryByPlaceholderText('오답노트를 작성해주세요.');
+    const textArea = screen.getByPlaceholderText('오답노트를 작성해주세요.');
     await user.type(textArea, 'test');
 
     const saveButton = screen.getByRole('button', { name: '수정' });
