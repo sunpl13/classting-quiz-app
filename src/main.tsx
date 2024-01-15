@@ -7,6 +7,7 @@ import ModalProvider from './contexts/ModalContext.tsx';
 import Modals from './components/modals/Modals.tsx';
 import { QuestionContextProvider } from './contexts/QuestionContext.tsx';
 import { MyAnswerContextProvider } from './contexts/MyAnswerContext.tsx';
+import { QuizTimesContextProvider } from './contexts/QuizTimesContext.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -14,8 +15,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <ModalProvider>
       <QuestionContextProvider>
         <MyAnswerContextProvider>
-          <RouterProvider router={router} />
-          <Modals />
+          <QuizTimesContextProvider>
+            <RouterProvider router={router} />
+            <Modals />
+          </QuizTimesContextProvider>
         </MyAnswerContextProvider>
       </QuestionContextProvider>
     </ModalProvider>

@@ -5,11 +5,14 @@ import { QuizParams } from '../types/quiztype';
 
 import QuizSelectField from '../components/QuizSelectField';
 import { useNavigate } from 'react-router-dom';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { useQuizTimesContext } from '../contexts/QuizTimesContext';
 
 const SelectQuizType = () => {
   const navigate = useNavigate();
-  const { setItem } = useLocalStorage('startTime');
+
+  const {
+    actions: { setTimes }
+  } = useQuizTimesContext();
   const [quizTypes, setquizTypes] = useState<QuizParams>({
     amount: 10,
     difficulty: 'any',
@@ -30,7 +33,7 @@ const SelectQuizType = () => {
 
   const onClick = () => {
     const { difficulty, category, type } = quizTypes;
-    setItem(new Date());
+    setTimes((prev) => ({ ...prev, startTime: new Date() }));
     navigate('/question', {
       state: {
         ...quizTypes,

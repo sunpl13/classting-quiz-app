@@ -1,25 +1,24 @@
 import styled from '@emotion/styled';
-import useLocalStorage from '../hooks/useLocalStorage';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import { Button } from '@mui/material';
 import DoughnutChart from '../components/DoughnutChart';
 import { useMyAnswerContext } from '../contexts/MyAnswerContext';
+import { useQuizTimesContext } from '../contexts/QuizTimesContext';
 
 const Result = () => {
   const navigate = useNavigate();
 
   const { myAnswer } = useMyAnswerContext();
+  const {
+    times: { startTime, endTime }
+  } = useQuizTimesContext();
   const totalAnswerCount = myAnswer.length;
   const correctCount = myAnswer.filter(
     (item) => item.myAnswer === item.answer
   ).length;
   const incorrectCount = totalAnswerCount - correctCount;
-  const { getItem: startTime, removeItem: removeStartTime } =
-    useLocalStorage('startTime');
-  const { getItem: endTime, removeItem: removeEndTime } =
-    useLocalStorage('endTime');
-  const time = (+new Date(endTime()) - +new Date(startTime())) / 1000;
+
+  const time = (endTime - startTime) / 1000;
   const minute = Math.floor(time / 60);
   const second = time % 60;
   const chartData = {

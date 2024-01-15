@@ -5,9 +5,9 @@ import shuffle from '../utils/shuffle';
 import { Button } from '@mui/material';
 import useModals from '../hooks/useModals';
 import { modals } from './modals/Modals';
-import useLocalStorage from '../hooks/useLocalStorage';
 import { useNavigate } from 'react-router-dom';
 import { useMyAnswerContext } from '../contexts/MyAnswerContext';
+import { useQuizTimesContext } from '../contexts/QuizTimesContext';
 
 type Props = {
   questions: TriviaQuizResponse[];
@@ -20,7 +20,9 @@ const Quiz = ({ questions }: Props) => {
     myAnswer,
     actions: { setMyAnswer }
   } = useMyAnswerContext();
-  const { setItem } = useLocalStorage('endTime');
+  const {
+    actions: { setTimes }
+  } = useQuizTimesContext();
   const navigate = useNavigate();
   const [answerIdx, setAnswerIdx] = useState<number | null>(null);
   const [answer, setAnswer] = useState(false);
@@ -57,7 +59,11 @@ const Quiz = ({ questions }: Props) => {
       setCurrentQuestion((prev) => prev + 1);
     } else {
       setCurrentQuestion(0);
-      setItem(new Date());
+      setTimes((prev) => ({
+        ...prev,
+        endTime: new Date()
+      }));
+
       navigate('/result');
     }
   };
