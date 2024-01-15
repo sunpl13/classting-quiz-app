@@ -100,6 +100,7 @@ const Quiz = ({ questions }: Props) => {
         <Button
           onClick={onClickNext}
           variant="outlined"
+          data-testid="next-btn"
           disabled={answerIdx === null}>
           {currentQuestion === questions.length - 1 ? '결과보기' : '다음'}
         </Button>
