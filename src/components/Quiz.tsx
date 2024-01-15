@@ -142,7 +142,7 @@ const QuizContainer = styled.div`
   }
 
   & .selected {
-    background: var(--primary);
+    background: linear-gradient(to left, var(--purple-30), var(--purple-50));
     border: 1px solid var(--accent);
     color: var(--bg);
   }
@@ -164,7 +164,7 @@ const ButtonWrapp = styled.div`
   justify-content: flex-end;
 
   & button {
-    background: linear-gradient(0deg, var(--primary) 0.03%, var(--accent));
+    background: linear-gradient(to left, var(--purple-30), var(--purple-50));
     border-radius: 9px;
     font-size: 18px;
     color: var(--bg);

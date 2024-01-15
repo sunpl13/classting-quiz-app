@@ -21,7 +21,7 @@ const Result = () => {
 
   const time = (endTime - startTime) / 1000;
   const minute = Math.floor(time / 60);
-  const second = time % 60;
+  const second = (time % 60).toFixed(0);
   const chartData = {
     labels: ['정답', '오답'],
     datasets: [
@@ -72,7 +72,7 @@ const Result = () => {
         <Button variant="contained" onClick={onReset}>
           다시하기
         </Button>
-        <Button variant="contained" onClick={viewHistory}>
+        <Button variant="outlined" onClick={viewHistory}>
           문제 기록 보기
         </Button>
       </div>
@@ -112,6 +112,10 @@ const ResultContainer = styled.div`
     justify-content: center;
     margin-top: 50px;
     gap: 0 10px;
+
+    & button:first-of-type {
+      background: linear-gradient(to left, var(--purple-30), var(--purple-50));
+    }
   }
 
   & .chart-container {

@@ -27,7 +27,7 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-describe('QuizWrapper 컴포넌트 (데이터가 성공으로 들어올 시)', () => {
+describe('QuizWrapper 컴포넌트', () => {
   it('데이터가 로딩 중이라면 스켈레톤 UI가 보여져야 한다.', async () => {
     await render(<QuizWrapper />);
 

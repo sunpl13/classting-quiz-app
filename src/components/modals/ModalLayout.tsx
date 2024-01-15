@@ -63,7 +63,7 @@ const ContentLayout = styled.div`
   }
 
   & button {
-    background: linear-gradient(0deg, var(--primary) 0.03%, var(--accent));
+    background: linear-gradient(to left, var(--purple-30), var(--purple-50));
     border-radius: 9px;
     font-size: 18px;
     color: var(--bg);

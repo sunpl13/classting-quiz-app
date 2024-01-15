@@ -18,5 +18,6 @@ export default App;
 const AppContainer = styled.main`
   & h1 {
     text-align: center;
+    color: var(--bg-accent);
   }
 `;

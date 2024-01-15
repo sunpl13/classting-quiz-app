@@ -111,6 +111,7 @@ const Wrapper = styled.div`
     width: 100%;
     height: 40px;
     margin-top: 0.5em;
+    background: linear-gradient(to left, var(--purple-30), var(--purple-50));
   }
 
   & h2 {

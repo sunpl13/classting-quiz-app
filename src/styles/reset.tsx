@@ -9,6 +9,10 @@ const reset = css`
     --disabled: #9c9c9c;
     --foreground: #2d264b;
     --incorrect: #fb4949;
+    --purple-50: #6f3ad0;
+    --purple-30: #a86cea;
+    --purple-20: rgb(159, 122, 234);
+    --green: rgb(0, 200, 150);
   }
   html,
   body,
@@ -53,7 +57,11 @@ const reset = css`
 
   body {
     font-family: monospace;
-    background: linear-gradient(0deg, var(--primary) 0.03%, var(--accent));
+    background: linear-gradient(
+      90deg,
+      var(--green) 0%,
+      var(--purple-20) 99.85%
+    );
     color: var(--foreground);
     display: flex;
     justify-content: center;
