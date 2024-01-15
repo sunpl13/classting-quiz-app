@@ -1,4 +1,12 @@
-import { createContext, useContext, ReactNode, useState, useMemo } from 'react';
+import {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useMemo,
+  Dispatch,
+  SetStateAction
+} from 'react';
 interface IProps {
   children: ReactNode;
 }
@@ -12,7 +20,7 @@ interface IAnswer {
 type MyAnswerContextValue = {
   myAnswer: IAnswer[];
   actions: {
-    setMyAnswer: (myAnswer: IAnswer[]) => void;
+    setMyAnswer: Dispatch<SetStateAction<IAnswer[]>>;
   };
 };
 
@@ -29,9 +37,7 @@ export const MyAnswerContextProvider = ({ children }: IProps) => {
   const actions = useMemo(
     () => ({
       myAnswer,
-      setMyAnswer: (myAnswer: IAnswer[]) => {
-        return setMyAnswer([...myAnswer]);
-      }
+      setMyAnswer
     }),
     [myAnswer]
   );

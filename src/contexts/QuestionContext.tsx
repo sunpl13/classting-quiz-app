@@ -1,4 +1,12 @@
-import { createContext, useContext, ReactNode, useState, useMemo } from 'react';
+import {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useMemo,
+  Dispatch,
+  SetStateAction
+} from 'react';
 import { TriviaQuizResponse } from '../types/quiztype';
 interface IProps {
   children: ReactNode;
@@ -7,7 +15,7 @@ interface IProps {
 type QuestionLists = {
   questionList: TriviaQuizResponse[];
   actions: {
-    setQuestionList: (questionList: TriviaQuizResponse[]) => void;
+    setQuestionList: Dispatch<SetStateAction<TriviaQuizResponse[]>>;
   };
 };
 
@@ -23,10 +31,8 @@ export const QuestionContextProvider = ({ children }: IProps) => {
 
   const actions = useMemo(
     () => ({
-      questionList: questionList,
-      setQuestionList: (questionList: TriviaQuizResponse[]) => {
-        return setQuestionList([...questionList]);
-      }
+      questionList,
+      setQuestionList
     }),
     [questionList]
   );
