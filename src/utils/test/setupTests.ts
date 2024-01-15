@@ -7,6 +7,14 @@ afterEach(() => {
 afterAll(() => {
   vi.resetAllMocks();
 });
+
+const navigateFn = vi.fn();
+vi.mock('react-router-dom', async () => {
+  const original = await vi.importActual('react-router-dom');
+
+  return { ...original, useNavigate: () => navigateFn };
+});
+
 // https://github.com/vitest-dev/vitest/issues/821
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
