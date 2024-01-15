@@ -10,6 +10,9 @@
   - [4. 구현 기능](#4-구현-기능)
   - [5. 개발 스택](#5-개발-스택)
   - [6. 폴더 구조](#6-폴더-구조)
+  - [7. 프로젝트 참고사항](#7-프로젝트-참고사항)
+    - [Context](#context)
+    - [Hooks](#hooks)
 
 
 ## 1. 데모 영상
@@ -186,3 +189,25 @@ Open API를 이용한 Quiz App을 개발합니다.
  ┣ 📂__mocks__
  ┃ ┗ 📜handlers.ts
 </pre>
+
+  <br>
+
+## 7. 프로젝트 참고사항
+프로젝트 이해의 도움을 줄 수 있습니다.
+
+### Context
+전역 상태 관리로 Context API를 사용하여 구현하였습니다. 사용한 Context들은 다음과 같습니다.
+ 1. **ModalContext**: 모달을 전역적으로 관리하기 위한 Context
+ 2. **MyAnswerContext**: 내가 작성한 정답과 실제 정답을 가지고 있는 Context
+ 3. **QuestionContext**: API로 받아온 질문들을 저장하는 Context
+ 4. **QuizTimeContext**: 퀴즈 시작과 끝 시간을 저장해놓는 Context
+
+<br>
+
+### Hooks
+프로젝트는 대체적으로 Custom Hook Pattern으로 구현하였는데요. 사용한 Hooks들은 다음과 같습니다.
+
+1. **useClenup**: 다시 하기 버튼을 누를 때 가지고 있는 context들을 초기화 시켜주기 위한 hook
+   - 재사용 하는 곳이 많아 별도로 분리시켰습니다.
+2. **useGetQuiz**: open API를 실제로 받아오는 비즈니스 로직입니다.
+3. **useModals**: 모달을 컨트롤하는 Hook입니다.
